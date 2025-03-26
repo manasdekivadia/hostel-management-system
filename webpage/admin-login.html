@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel = "stylesheet" href = "style_admin_login.css"> 
+
 </head>
 <body>
-    ADMIN LOGIN
-    <button onclick="location.href='index.html'">Home</button>
+    <div class="wrapper">
+        span
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class = "icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type ="email" required>
+                    <label>Email</label>
+                </div>
+                
+                <div class="input-box">
+                    <span class = "icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type ="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class = "btn">Login</button>
 
+            </form>
+        </div>
+    </div>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
