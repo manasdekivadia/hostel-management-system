@@ -51,9 +51,20 @@ body{
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-h2{
+.admin-h2{
     position: absolute;
+    left: 48px;
+    top: 30px;
+    display: inline-block;
+    margin-left: 70px;
+    margin-top: 0px;
+    
+}
 
+.student-h2{
+    position: absolute;
+    left: 40px;
+    top: 30px;
     display: inline-block;
     margin-left: 70px;
     margin-top: 0px;
@@ -65,6 +76,7 @@ h2{
     height: 50px;
     border-bottom: 2px solid #162938;
     margin: 30px 0;
+    padding-right: 28px;
 }
 
 .input-box label{
@@ -94,6 +106,7 @@ h2{
     color: #162938;
     font-weight: 600;
     padding: 0 35 0 5px;
+    
 }
 
 .input-box .icon {
