@@ -4,297 +4,148 @@ import { Button } from "../Common/PrimaryButton";
 import { Loader } from "../Common/Loader";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { motion } from "framer-motion";
 
 function RegisterStudent() {
+  const [cms, setCms] = useState("");
+  const [name, setName] = useState("");
+  const [room_no, setRoomNo] = useState("");
+  const [batch, setBatch] = useState("");
+  const [dept, setDept] = useState("");
+  const [course, setCourse] = useState("");
+  const [email, setEmail] = useState("");
+  const [fatherName, setFatherName] = useState("");
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
+  const [dob, setDob] = useState("");
+  const [cnic, setCnic] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const hostel = JSON.parse(localStorage.getItem("hostel"))?.name || "";
+
   const registerStudent = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      let student = {
-        name: name,
+      const student = {
+        name,
         cms_id: cms,
-        room_no: room_no,
-        batch: batch,
-        dept: dept,
-        course: course,
-        email: email,
+        room_no,
+        batch,
+        dept,
+        course,
+        email,
         father_name: fatherName,
-        contact: contact,
-        address: address,
-        dob: dob,
-        cnic: cnic,
-        hostel: hostel,
-        password: password
+        contact,
+        address,
+        dob,
+        cnic,
+        hostel,
+        password
       };
+
       const res = await fetch("http://localhost:3000/api/student/register-student", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(student),
-      })
+      });
+
       const data = await res.json();
 
       if (data.success) {
-        toast.success(
-          'Student ' + data.student.name + ' Registered Successfully!', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        })
-        setCms("");
-        setName("");
-        setRoomNo("");
-        setBatch("");
-        setDept("");
-        setCourse("");
-        setEmail("");
-        setFatherName("");
-        setContact("");
-        setAddress("");
-        setDob("");
-        setCnic("");
-        setPassword("");
-        setLoading(false);
+        toast.success(`Student ${data.student.name} Registered Successfully!`);
+        setCms(""); setName(""); setRoomNo(""); setBatch("");
+        setDept(""); setCourse(""); setEmail(""); setFatherName("");
+        setContact(""); setAddress(""); setDob(""); setCnic(""); setPassword("");
       } else {
-        // console.log(cms);
-        data.errors.forEach((err) => {
-          toast.error(
-            err.msg, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-          })
-        })
-        setLoading(false);
-
+        data.errors.forEach((err) => toast.error(err.msg));
       }
     } catch (err) {
-      toast.error(
-        err, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      }
-      )
+      toast.error("Something went wrong!");
+    } finally {
       setLoading(false);
     }
   };
 
-  const hostel = JSON.parse(localStorage.getItem("hostel")).name;
-  const [cms, setCms] = useState();
-  const [name, setName] = useState();
-  const [room_no, setRoomNo] = useState();
-  const [batch, setBatch] = useState();
-  const [dept, setDept] = useState();
-  const [course, setCourse] = useState();
-  const [email, setEmail] = useState();
-  const [fatherName, setFatherName] = useState();
-  const [contact, setContact] = useState();
-  const [address, setAddress] = useState();
-  const [dob, setDob] = useState();
-  const [cnic, setCnic] = useState();
-  const [password, setPassword] = useState();
-
-  const [loading, setLoading] = useState(false);
-
   return (
-    <div className="w-full max-h-screen pt-20 flex flex-col items-center justify-center">
-      <h1 className="text-white font-bold text-5xl mt-10 mb-5">
+    <div className="min-h-screen w-full pt-20 px-4 flex flex-col items-center justify-start bg-black text-white relative overflow-hidden">
+      {/* Subtle Animated Gradient */}
+      <div className="absolute top-0 left-0 w-full h-full z-0">
+        <div className="animate-pulse bg-gradient-to-br from-purple-900 via-black to-purple-800 opacity-10 w-full h-full" />
+      </div>
+
+      <motion.h1 
+        className="text-4xl md:text-5xl font-extrabold mb-8 z-10"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         Register Student
-      </h1>
-      <div className="md:w-[60vw] w-full p-10 bg-neutral-950 rounded-lg shadow-xl mb-10 overflow-auto">
-        <form method="post" onSubmit={registerStudent} className="flex flex-col gap-3">
-          <div className="flex gap-5 flex-wrap justify-center md:w-full sw-[100vw]">
+      </motion.h1>
+
+      <motion.div
+        className="w-full max-w-5xl p-8 md:p-12 bg-neutral-900 rounded-2xl shadow-2xl z-10 backdrop-blur-sm border border-neutral-700"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <form onSubmit={registerStudent} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Input field={{ name: "name", placeholder: "Student Name", type: "text", req: true, value: name, onChange: (e) => setName(e.target.value) }} />
+            <Input field={{ name: "ID", placeholder: "Student ID", type: "number", req: true, value: cms, onChange: (e) => setCms(e.target.value) }} />
+            <Input field={{ name: "DOB", placeholder: "Date of Birth", type: "date", req: true, value: dob, onChange: (e) => setDob(e.target.value) }} />
+            <Input field={{ name: "Aadhaar", placeholder: "Student Aadhaar", type: "text", req: true, value: cnic, onChange: (e) => setCnic(e.target.value) }} />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Input field={{ name: "email", placeholder: "Student Email", type: "email", req: true, value: email, onChange: (e) => setEmail(e.target.value) }} />
+            <Input field={{ name: "contact", placeholder: "Contact Number", type: "text", req: true, value: contact, onChange: (e) => setContact(e.target.value) }} />
+            <Input field={{ name: "father's Name", placeholder: "Father's Name", type: "text", req: true, value: fatherName, onChange: (e) => setFatherName(e.target.value) }} />
+          </div>
+
+          <div className="grid grid-cols-1">
             <Input
               field={{
-                name: "name",
-                placeholder: "Student Name",
-                type: "text",
+                name: "address",
+                placeholder: "Student Address",
+                type: "textarea",
                 req: true,
-                value: name,
-                onChange: (e) => setName(e.target.value),
-              }}
-            />
-            <Input
-              field={{
-                name: "cms",
-                placeholder: "Student CMS",
-                type: "number",
-                req: true,
-                value: cms,
-                onChange: (e) => setCms(e.target.value),
-              }}
-            />
-            <Input
-              field={{
-                name: "dob",
-                placeholder: "Student dob",
-                type: "date",
-                req: true,
-                value: dob,
-                onChange: (e) => setDob(e.target.value),
-              }}
-            />
-            <Input
-              field={{
-                name: "cnic",
-                placeholder: "Student CNIC",
-                type: "text",
-                req: true,
-                value: cnic,
-                onChange: (e) => setCnic(e.target.value),
+                value: address,
+                onChange: (e) => setAddress(e.target.value),
               }}
             />
           </div>
-          <div className="flex gap-5 w-full flex-wrap justify-center">
-            <Input
-              field={{
-                name: "email",
-                placeholder: "Student Email",
-                type: "email",
-                req: true,
-                value: email,
-                onChange: (e) => setEmail(e.target.value),
-              }}
-            />
-            <Input
-              field={{
-                name: "contact",
-                placeholder: "Student Contact",
-                type: "text",
-                req: true,
-                value: contact,
-                onChange: (e) => setContact(e.target.value),
-              }}
-            />
-            <Input
-              field={{
-                name: "father_name",
-                placeholder: "Student's Father Name",
-                type: "text",
-                req: true,
-                value: fatherName,
-                onChange: (e) => setFatherName(e.target.value),
-              }}
-            />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Input field={{ name: "room", placeholder: "Room Number", type: "number", req: true, value: room_no, onChange: (e) => setRoomNo(e.target.value) }} />
+            <Input field={{ name: "hostel", placeholder: "Hostel Name", type: "text", req: true, value: hostel, disabled: true }} />
+            <Input field={{ name: "dept", placeholder: "Department", type: "text", req: true, value: dept, onChange: (e) => setDept(e.target.value) }} />
           </div>
-          <div className="mx-12">
-            <label
-              htmlFor="address"
-              className="block mb-2 text-sm font-medium text-white"
-            >
-              Address
-            </label>
-            <textarea
-              name="address"
-              placeholder="Student Address"
-              required
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="border flex-grow sm:text-sm rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none"
-            />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input field={{ name: "course", placeholder: "Course", type: "text", req: true, value: course, onChange: (e) => setCourse(e.target.value) }} />
+            <Input field={{ name: "batch", placeholder: "Batch", type: "number", req: true, value: batch, onChange: (e) => setBatch(e.target.value) }} />
           </div>
-          <div className="flex flex-wrap gap-5 w-full justify-center">
-            <Input
-              field={{
-                name: "room",
-                placeholder: "Student Room",
-                type: "number",
-                req: true,
-                value: room_no,
-                onChange: (e) => setRoomNo(e.target.value),
-              }}
-            />
-            <Input
-              field={{
-                name: "hostel",
-                placeholder: "Student Hostel",
-                type: "text",
-                req: true,
-                value: hostel,
-                disabled: true,
-              }}
-            />
-            <Input
-              field={{
-                name: "dept",
-                placeholder: "Student Department",
-                type: "text",
-                req: true,
-                value: dept,
-                onChange: (e) => setDept(e.target.value),
-              }}
-            />
-          </div>
-          <div className="flex flex-wrap justify-center gap-5">
-            <Input
-              field={{
-                name: "course",
-                placeholder: "Student Course",
-                type: "text",
-                req: true,
-                value: course,
-                onChange: (e) => setCourse(e.target.value),
-              }}
-            />
-            <Input
-              field={{
-                name: "batch",
-                placeholder: "Student Batch",
-                type: "number",
-                req: true,
-                value: batch,
-                onChange: (e) => setBatch(e.target.value),
-              }}
-            />
-          </div>
-          <div className="mx-12">
-            <Input
-              field={{
-                name: "password",
-                placeholder: "Student Password",
-                type: "password",
-                req: true,
-                value: password,
-                onChange: (e) => setPassword(e.target.value),
-              }}
-            />
-          </div>
-          <div className="mt-5">
-            <Button>
-              {loading ? (
-                <>
-                  <Loader /> Registering...
-                </>
-              ) : (
-                <span>Register Student</span>
-              )}
-            </Button>
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-            />
+
+          <Input field={{ name: "password", placeholder: "Password", type: "password", req: true, value: password, onChange: (e) => setPassword(e.target.value) }} />
+
+          <div className="flex justify-center mt-6">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button>
+                {loading ? (
+                  <>
+                    <Loader /> Registering...
+                  </>
+                ) : (
+                  "Register Student"
+                )}
+              </Button>
+            </motion.div>
           </div>
         </form>
-      </div>
+      </motion.div>
+      <ToastContainer />
     </div>
   );
 }

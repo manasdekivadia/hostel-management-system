@@ -34,7 +34,7 @@ export default function RequestAcc() {
 
 
   const cms = {
-    name: "cms",
+    name: "ID",
     type: "number",
     placeholder: "000000",
     req: true,
