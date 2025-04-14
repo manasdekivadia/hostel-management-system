@@ -69,11 +69,8 @@ function RegisterStudent() {
   };
 
   return (
-    <div className="min-h-screen w-full pt-20 px-4 flex flex-col items-center justify-start bg-black text-white relative overflow-hidden">
-      {/* Subtle Animated Gradient */}
-      <div className="absolute top-0 left-0 w-full h-full z-0">
-        <div className="animate-pulse bg-gradient-to-br from-purple-900 via-black to-purple-800 opacity-10 w-full h-full" />
-      </div>
+    <div className="min-h-screen w-full pt-20 px-4 flex flex-col items-center justify-start bg-black text-white relative"> 
+      {/* Removed the animated gradient div */}
 
       <motion.h1 
         className="text-4xl md:text-5xl font-extrabold mb-8 z-10"
