@@ -3,7 +3,7 @@ import { TeamCard } from "./TeamMember";
 function About() {
   const tanika = {
     name: "Tanika Goyal",
-    designation: "Front-end Engineer",
+    designation: "Database Engineer",
     image:
       "https://media.licdn.com/dms/image/v2/D5603AQH0wX1z0AoeIQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1713599231763?e=1749686400&v=beta&t=jPCUi4of8__0-9-IsecMjXMrP3W8mGdGNxK7DsrgwHw",
     linkedin: "https://www.linkedin.com/in/tanika-goyal-54a80228a/",
@@ -19,7 +19,7 @@ function About() {
 
   const padmesh = {
     name: "Padmesh Shukla",
-    designation: "Front End Developer",
+    designation: "Front End Engineer",
     image:
       "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png",
     linkedin: "https://www.linkedin.com/in/padmeshshukla/",
