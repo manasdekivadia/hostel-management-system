@@ -3,11 +3,13 @@ import { PropTypes } from "prop-types";
 Modal.propTypes = {
   closeModal: PropTypes.func,
   suggestion: PropTypes.object,
+  updateSuggestion: PropTypes.func,
 };
 
-function Modal({ closeModal, suggestion }) {
+function Modal({ closeModal, suggestion, updateSuggestion }) {
   const ack = () => {
-    //! Acknowledge into DB from here.
+    // Call the updateSuggestion function with the suggestion ID
+    updateSuggestion(suggestion._id);
     closeModal();
   };
 
