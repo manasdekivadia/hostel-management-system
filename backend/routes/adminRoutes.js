@@ -10,10 +10,10 @@ router.post('/register-admin', [
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('father_name', 'Father name is required').not().isEmpty(),
-    check('contact', 'Enter a valid contact number').isLength(11),
+    check('contact', 'Enter a valid contact number').isLength(10),
     check('address', 'Address is required').not().isEmpty(),
     check('dob', 'Date of birth is required').not().isEmpty(),
-    check('cnic', 'CNIC is required').isLength(13),
+    check('cnic', 'Aadhar is required').isLength(12),
     check('password', 'Password is required').isLength(8)
 ], registerAdmin);
 
@@ -23,10 +23,10 @@ router.post('/register-admin', [
 router.post('/update-admin', [
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
-    check('contact', 'Enter a valid contact number').isLength(11),
+    check('contact', 'Enter a valid contact number').isLength(10),
     check('address', 'Address is required').not().isEmpty(),
     check('dob', 'Date of birth is required').not().isEmpty(),
-    check('cnic', 'CNIC is required').isLength(13),
+    check('cnic', 'Aadhaar is required').isLength(12),
     check('hostel', 'Hostel is required').not().isEmpty(),
     check('password', 'Password is required').isLength(8)
 ], updateAdmin);
