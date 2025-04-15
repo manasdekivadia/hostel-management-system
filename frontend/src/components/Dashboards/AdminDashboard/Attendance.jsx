@@ -104,46 +104,105 @@ function Attendance() {
 
   const labels = ["Present", "Absentees", "Unmarked Students"];
   const graph = (
-    <div className="flex flex-row-reverse items-center gap-3 h-64">
-      <Doughnut
-        datasetIdKey="id"
-        data={{
-          labels,
-          datasets: [
-            {
-              label: "No. of Students",
-              data: [
-                present,
-                markedStudents.length - present,
-                unmarkedStudents.length,
+    <div className="flex flex-col items-center gap-6 bg-neutral-900 p-8 rounded-xl shadow-2xl w-[800px]">
+      <h2 className="text-white text-2xl font-bold mb-4">Attendance Overview</h2>
+      <div className="flex flex-row items-center gap-12 w-full">
+        <div className="w-[400px]">
+          <Doughnut
+            datasetIdKey="id"
+            data={{
+              labels,
+              datasets: [
+                {
+                  label: "No. of Students",
+                  data: [
+                    present,
+                    markedStudents.length - present,
+                    unmarkedStudents.length,
+                  ],
+                  backgroundColor: [
+                    "rgba(34, 197, 94, 0.8)",  // Green for present
+                    "rgba(239, 68, 68, 0.8)",  // Red for absent
+                    "rgba(156, 163, 175, 0.8)", // Gray for unmarked
+                  ],
+                  borderColor: [
+                    "rgba(34, 197, 94, 1)",
+                    "rgba(239, 68, 68, 1)",
+                    "rgba(156, 163, 175, 1)",
+                  ],
+                  borderWidth: 2,
+                  hoverOffset: 15,
+                  hoverBorderWidth: 3,
+                },
               ],
-              backgroundColor: ["#1D4ED8", "#F26916", "#808080"],
-              barThickness: 20,
-              borderRadius: 0,
-              borderJoinStyle: "round",
-              borderColor: "rgba(0,0,0,0)",
-              hoverOffset: 10,
-            },
-          ],
-        }}
-        options={{
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-        }}
-      />
-      <ul className="text-white">
-        <li className="flex gap-2">
-          {" "}
-          <span className="w-10 h-5 bg-orange-500 block"></span> Absent
-        </li>
-        <li className="flex gap-2">
-          {" "}
-          <span className="w-10 h-5 bg-blue-500 block"></span> Present
-        </li>
-      </ul>
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: true,
+                  position: 'right',
+                  labels: {
+                    color: 'white',
+                    font: {
+                      size: 14,
+                      weight: 'bold'
+                    },
+                    padding: 20,
+                    usePointStyle: true,
+                    pointStyle: 'circle'
+                  }
+                },
+                tooltip: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  titleFont: {
+                    size: 16,
+                    weight: 'bold'
+                  },
+                  bodyFont: {
+                    size: 14
+                  },
+                  padding: 12,
+                  displayColors: true,
+                  callbacks: {
+                    label: function(context) {
+                      const label = context.label || '';
+                      const value = context.raw || 0;
+                      const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                      const percentage = Math.round((value / total) * 100);
+                      return `${label}: ${value} (${percentage}%)`;
+                    }
+                  }
+                }
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true,
+                duration: 2000,
+                easing: 'easeInOutQuart'
+              },
+              cutout: '60%'
+            }}
+            height={300}
+            width={400}
+          />
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="bg-green-500/10 p-6 rounded-lg text-center min-w-[200px]">
+            <p className="text-green-500 font-bold text-3xl">{present}</p>
+            <p className="text-white text-lg">Present</p>
+          </div>
+          <div className="bg-red-500/10 p-6 rounded-lg text-center min-w-[200px]">
+            <p className="text-red-500 font-bold text-3xl">{markedStudents.length - present}</p>
+            <p className="text-white text-lg">Absent</p>
+          </div>
+          <div className="bg-gray-500/10 p-6 rounded-lg text-center min-w-[200px]">
+            <p className="text-gray-400 font-bold text-3xl">{unmarkedStudents.length}</p>
+            <p className="text-white text-lg">Unmarked</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 
