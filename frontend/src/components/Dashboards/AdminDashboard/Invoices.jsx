@@ -173,7 +173,7 @@ function Invoices() {
   return (
     <div className="w-full h-screen flex flex-col gap-6 items-center justify-center pt-20 pb-10 overflow-auto">
       <LoadingBar color='#0000FF' progress={Progress} onLoaderFinished={() => setProgress(0)} />
-      <h1 className="text-white font-bold text-5xl">Invoices</h1>
+      <h1 className="text-white font-bold text-5xl mt-16">Invoices</h1>
       
       <div className="flex flex-col items-center gap-8 w-full max-w-6xl">
         <div className="bg-neutral-900 p-8 rounded-xl shadow-2xl w-full">

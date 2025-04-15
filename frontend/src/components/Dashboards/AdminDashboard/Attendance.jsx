@@ -210,8 +210,10 @@ function Attendance() {
   return (
     <div className="w-full h-screen flex flex-col gap-3 items-center xl:pt-0 md:pt-40 pt-64 justify-center overflow-auto max-h-screen">
       <LoadingBar color="#0000FF" progress={progress} onLoaderFinished={() => setProgress(0)} />
-      <h1 className="text-white font-bold text-5xl">Attendance</h1>
-      <p className="text-white text-xl mb-10">Date: {date}</p>
+      <div className="mt-20 flex flex-col items-center">
+        <h1 className="text-white font-bold text-5xl">Attendance</h1>
+        <p className="text-white text-xl mb-10 text-center">Date: {date}</p>
+      </div>
       <div className="flex gap-5 flex-wrap items-center justify-center">
         <>{graph}</>
         <div className="flow-root md:w-[400px] w-full bg-neutral-950 px-7 py-5 rounded-lg shadow-xl max-h-[250px] overflow-auto">
