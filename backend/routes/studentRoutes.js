@@ -19,7 +19,7 @@ router.post('/register-student', [
     check('contact', 'Enter a valid contact number').isLength(10),
     check('address', 'Address is required').not().isEmpty(),
     check('dob', 'Date of birth is required').not().isEmpty(),
-    check('cnic', 'Enter valid Aadhaar').isLength(12),
+    check('cnic', 'Aadhaar must be exactly 12 digits').isInt().isLength({ min: 12, max: 12 }),
     check('hostel', 'Hostel is required').not().isEmpty(),
     check('password', 'Please enter a password with 8 or more characters').isLength({ min: 8 }),
 ], registerStudent);

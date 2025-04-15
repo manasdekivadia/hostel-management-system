@@ -194,26 +194,38 @@ const csvStudent = async (req, res) => {
 
         const students = await Student.find({ hostel: shostel.id }).select('-password');
 
-        students.forEach(student => {
-            student.hostel_name = shostel.name;
-            student.d_o_b = new Date(student.dob).toDateString().slice(4);
-            student.cnic_no = student.cnic.slice(0, 4) + '-' + student.cnic.slice(4, 8) + '-' + student.cnic.slice(12);
-            student.contact_no = "+91 "+student.contact.slice(1);
+        const formattedStudents = students.map(student => {
+            return {
+                id: student.cms_id, // Changed column name
+                name: student.name,
+                room_no: student.room_no,
+                batch: student.batch,
+                dept: student.dept,
+                course: student.course,
+                email: student.email,
+                father_name: student.father_name,
+                contact_no: "+91 " + student.contact.slice(1),
+                address: student.address,
+                d_o_b: new Date(student.dob).toDateString().slice(4),
+                aadhar: student.cnic.slice(0, 4) + '-' + student.cnic.slice(4, 8) + '-' + student.cnic.slice(8, 12),
+                hostel_name: shostel.name,
+            };
         });
 
-        const fields = ['name', 'cms_id', 'room_no', 'batch', 'dept', 'course', 'email', 'father_name', 'contact_no', 'address', 'd_o_b', 'cnic_no', 'hostel_name'];
+        const fields = ['id', 'name', 'room_no', 'batch', 'dept', 'course', 'email', 'father_name', 'contact_no', 'address', 'd_o_b', 'aadhar', 'hostel_name'];
 
         const opts = { fields };
 
         const parser = new Parser(opts);
 
-        const csv = parser.parse(students);
+        const csv = parser.parse(formattedStudents);
 
         success = true;
         res.json({success, csv});
     } catch (err) {
         res.status(500).json({success, errors: [{msg: 'Server error'}]});
     }
+    
 }
 
 module.exports = {
