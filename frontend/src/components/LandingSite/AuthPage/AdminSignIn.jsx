@@ -175,7 +175,7 @@ export default function AdminSignIn() {
               to="/auth/login"
               className="font-medium hover:underline text-blue-500"
             >
-              Signin Here.
+              Sign in Here.
             </Link>
           </p>
         </form>
